@@ -1,5 +1,5 @@
 
-const api_url = "https://67d67177286fdac89bc1ec9d.mockapi.io/Carts"
+export const api_url = "https://67d67177286fdac89bc1ec9d.mockapi.io/Carts"
 
 
 export async function GET(){
@@ -38,3 +38,4 @@ export async function POST(request:Request){
         new Response(null , {status:400})
     }
 }
+
