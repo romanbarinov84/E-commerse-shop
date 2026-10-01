@@ -1,81 +1,46 @@
 'use client';
 
-import { SubmitEvent, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 
 type Product = {
     id: string;
     text: string;
+    productName:string;
+    price:number;
 };
 
 export default function Home() {
-    const [comment, setComment] = useState<Product[]>([]);
-    const [newCommentText, setNewCommentText] = useState('');
+    const [carts, setCarts] = useState<Product[]>([]);
 
-    async function loadComments() {
-        const res = await fetch('/api/products');
-        const data = await res.json();
-
-        setComment(data);
+    async function loadCarts() {
+        const response = await fetch('/api/carts?limit=10&page=2');
+        const data:Product[] = await response.json();
+         setCarts(data)
     }
 
     useEffect(() => {
-        const result = () => loadComments();
-        result();
-    }, []);
+        const result = () => loadCarts();
+        result()
+    },[])
 
-    const handleSubmit = async (event: SubmitEvent) => {
-        event.preventDefault();
-        const response = await fetch('/api/products', {
-            method: 'POST',
-            body: JSON.stringify({ text: newCommentText }),
-        });
-        if (response.ok) {
-            setNewCommentText('');
-            loadComments();
-        }
-    };
+   
 
     return (
         <>
-            <h2 className="text-2xl font-bold text-red-400">
-                Products
-                <ul className="mb-6">
-                    {comment.map((comment) => (
-                        <li
-                            key={comment.id}
-                            className="mb-3 p-2 border rounded-sm"
-                        >
-                            <span className="text-blue-300">
-                                {comment.text}
-                            </span>
-                        </li>
+            <div className='text-center'>
+                <h2 className='text-2xl text-green-500 font-bold'>Carts</h2>
+                 </div>
+                <ul className='m-3 gap-3 flex-1'>
+                    {carts.map((cart) => (
+                        <li key={cart.id} className='px-5 py-2 border-2 mb-2 border-gray-300 bg-orange-300 flex justify-between gap-5 '>
+                            <span className='border-2 p-2 border-black mr-3 bg-red-300'>{cart.id}</span>
+                            <span className='text-xl text-white font-bold mr-2'>{cart.productName}</span>
+                            <span className='text-2xl text-red-600 font-extrabold'>{cart.price}.uah</span>
+                            {cart.text}</li>
+
                     ))}
                 </ul>
-            </h2>
-            <div className="text-center">
-                <h2 className="text-2xl text-green-300 font-bold">
-                    Добавить коментарий
-                </h2>
-            </div>
-            <form
-                onSubmit={handleSubmit}
-                className="border-gray-300 border-2 rounded-sm mx-3"
-            >
-                <input
-                    value={newCommentText}
-                    onChange={(e) => setNewCommentText(e.target.value)}
-                    className="border-gray-400 rounded-sm m-5 p-3 flex-1 bg-gray-300"
-                    type="text"
-                    placeholder="ваш коментарий"
-                    required
-                />
-                <button
-                    type="submit"
-                    className="bg-blue-300 text-white px-4 py-3 rounded-sm "
-                >
-                    SEND
-                </button>
-            </form>
+           
         </>
     );
 }
