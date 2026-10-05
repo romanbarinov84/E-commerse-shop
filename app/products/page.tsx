@@ -1,18 +1,11 @@
 "use client"
 
 import { getProducts } from "@/lib/api/products";
+import type { Products } from "@/types/products";
 import { useEffect, useState } from "react"
 
 
-type Products = {
-    productName:string;
-    price:number;
-    text:string;
-    id:string;
-    
-    
-    
-}
+
 
  
 const ProductsPage = () => {
@@ -21,15 +14,12 @@ const ProductsPage = () => {
 
 
 
-    async function loadProducts(){
-       const data = await getProducts();
-         setProducts(data)
-        
-    }
+    
 
     useEffect(() => {
-        const result = () => loadProducts()
-        result()
+       getProducts().then((data) => {
+        setProducts(data)
+       })
     },[])
 
 
