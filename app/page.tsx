@@ -13,8 +13,8 @@ export default function Home() {
     const [carts, setCarts] = useState<Product[]>([]);
 
     async function loadCarts() {
-        const response = await fetch('/api/carts?limit=10&page=2');
-        const data:Product[] = await response.json();
+        const response = await fetch('/api/test');
+        const data = await response.json();
          setCarts(data)
     }
 
