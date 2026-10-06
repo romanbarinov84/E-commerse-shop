@@ -1,6 +1,6 @@
  export type Products = {
     productName:string;
-    price:number;
+    price:string;
     text:string;
     id:string;
     
