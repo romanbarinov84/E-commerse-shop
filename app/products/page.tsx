@@ -63,6 +63,9 @@ const ProductsPage = () => {
                         setNewProductPrice('');
                         setNewProductText('');
                         rebuild();
+                    }).catch((error) => {
+                       console.log(error);
+                       
                     });
                 }}
                 className="m-3 px-3 py-5 border-2 border-gray-500 rounded-sm bg-orange-200"
