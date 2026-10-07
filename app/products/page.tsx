@@ -1,11 +1,16 @@
 'use client';
 
 import { createProduct, getProducts } from '@/lib/api/products';
+
 import type { Products } from '@/types/products';
+
 import { useEffect, useState } from 'react';
+
+import ProductIdsPage from './productsId/page';
 
 const ProductsPage = () => {
     const [products, setProducts] = useState<Products[]>([]);
+
     const [newProductName, setNewProductName] = useState('');
     const [newProductPrice, setNewProductPrice] = useState<string>('');
     const [newProductText, setNewProductText] = useState('');
@@ -16,87 +21,160 @@ const ProductsPage = () => {
         });
     }
 
-   
-
     useEffect(() => {
         rebuild();
     }, []);
 
     return (
         <>
-            <div className="mt-5 mx-3 p-2 border-2 border-gray-300 rounded-sm ">
-                <h2 className="text-2xl text-green-500 font-bold">
-                    Products table
-                </h2>
-            </div>
-            <ul className=" m-3  px-2 py-4  border-2 border-gray-300 rounded-sm ">
-                {products.map((product) => (
-                    <li
-                        key={product.id}
-                        className="border-2 border-black bg-orange-400 px-5 py-2 flex justify-between items-center text-center"
-                    >
-                        {product.text}
-                        <span className="bg-orange-300 border-2 border-red-300">
-                            {product.price}
-                        </span>
-                        <span className="bg-green-300 border-2 border-gray-300">
-                            {product.productName}
-                        </span>
-                    </li>
-                ))}
-            </ul>
+            {/* Products header */}
+            <div className="mx-4 mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                <div className="flex items-center justify-between px-6 py-5">
+                    <div>
+                        <h2 className="text-2xl font-bold tracking-tight text-gray-800">
+                            Products
+                        </h2>
 
-            <div className="mt-5 mx-3 p-2 border-2 border-gray-300 rounded-sm ">
-                <h2 className="text-2xl text-green-500 font-bold">
-                    Create products
-                </h2>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Manage your products and prices
+                        </p>
+                    </div>
+
+                    <div className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600">
+                        {products.length} products
+                    </div>
+                </div>
             </div>
+
+            {/* Products table */}
+            <div className="mx-4 mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                {/* Table header */}
+                <div className="grid grid-cols-[1fr_180px_180px] gap-4 border-b border-gray-200 bg-gray-50 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    <span>Description</span>
+                    <span>Price</span>
+                    <span>Product</span>
+                </div>
+
+                <ul>
+                    {products.map((product) => (
+                        <li
+                            key={product.id}
+                            className="grid grid-cols-[1fr_180px_180px] items-center gap-4 border-b border-gray-100 px-6 py-4 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
+                        >
+                            <span className="text-gray-600">
+                                {product.text}
+                            </span>
+
+                            <span className="font-semibold text-gray-800">
+                                {product.price}
+                            </span>
+
+                            <span className="font-medium text-gray-700">
+                                {product.productName}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <ProductIdsPage />
+
+            {/* Create product header */}
+            <div className="mx-4 mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                <div className="px-6 py-5">
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-800">
+                        Create product
+                    </h2>
+
+                    <p className="mt-1 text-sm text-gray-500">
+                        Add a new product to your catalog
+                    </p>
+                </div>
+            </div>
+
+            {/* Create product form */}
             <form
                 onSubmit={(event) => {
                     event.preventDefault();
+
                     createProduct(
                         newProductName,
                         newProductPrice,
                         newProductText,
-                    ).then(() => {
-                        setNewProductName('');
-                        setNewProductPrice('');
-                        setNewProductText('');
-                        rebuild();
-                    }).catch((error) => {
-                       console.log(error);
-                       
-                    });
+                    )
+                        .then(() => {
+                            setNewProductName('');
+                            setNewProductPrice('');
+                            setNewProductText('');
+                            rebuild();
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
                 }}
-                className="m-3 px-3 py-5 border-2 border-gray-500 rounded-sm bg-orange-200"
+                className="mx-4 mt-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
             >
-                <input
-                    type="text"
-                    value={newProductName}
-                    onChange={(e) => setNewProductName(e.target.value)}
-                    placeholder="Название продукта"
-                    className="border p-2 flex-1 mr-2 bg-white rounded-sm focus:outline-2 focus:outline-neutral-200  focus:bg-blue-200 text-gray-500"
-                />
-                <input
-                    type="text"
-                    value={newProductPrice}
-                    onChange={(e) => setNewProductPrice(e.target.value)}
-                    placeholder="Цена"
-                    className="border p-2 flex-1 mr-2 bg-white rounded-sm focus:outline-2 focus:outline-neutral-200  focus:bg-blue-200 text-gray-500"
-                />
-                <input
-                    type="text"
-                    value={newProductText}
-                    onChange={(e) => setNewProductText(e.target.value)}
-                    placeholder="Описание товара"
-                    className="border p-2 flex-1 mr-2  bg-white rounded-sm focus:outline-2 focus:outline-neutral-200  focus:bg-blue-200 text-gray-500"
-                />
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
-                >
-                    Добавить комментарий
-                </button>
+                <div className="grid gap-5 md:grid-cols-3">
+                    {/* Product name */}
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            Product name
+                        </label>
+
+                        <input
+                            type="text"
+                            value={newProductName}
+                            onChange={(e) =>
+                                setNewProductName(e.target.value)
+                            }
+                            placeholder="Enter product name"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        />
+                    </div>
+
+                    {/* Price */}
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            Price
+                        </label>
+
+                        <input
+                            type="text"
+                            value={newProductPrice}
+                            onChange={(e) =>
+                                setNewProductPrice(e.target.value)
+                            }
+                            placeholder="Enter price"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        />
+                    </div>
+
+                    {/* Description */}
+                    <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            Description
+                        </label>
+
+                        <input
+                            type="text"
+                            value={newProductText}
+                            onChange={(e) =>
+                                setNewProductText(e.target.value)
+                            }
+                            placeholder="Enter description"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        />
+                    </div>
+                </div>
+
+                <div className="mt-6 flex justify-end border-t border-gray-100 pt-5">
+                    <button
+                        type="submit"
+                        className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md active:scale-[0.98]"
+                    >
+                        Add product
+                    </button>
+                </div>
             </form>
         </>
     );
