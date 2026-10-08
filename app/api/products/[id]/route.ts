@@ -4,7 +4,7 @@ export async function GET(request:Request ,{params}:{params:Promise<{id:string}>
     const {id} = await params;
 
     try {
-        const response = await fetch(`${process.env.MPCK_API_URL}/${id}`);
+        const response = await fetch(`${process.env.MOCK_API_URL}/${id}`);
         if(response.status === 404) throw new Error("Failed to fetch product with ID");
         if(!response.ok) throw new Error("Failed to fetch  products an ID");
 
