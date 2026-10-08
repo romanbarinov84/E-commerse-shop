@@ -7,10 +7,11 @@ import type { Products } from '@/types/products';
 import { useEffect, useState } from 'react';
 
 import ProductIdsPage from './productsId/page';
+import ProductSearchPage from './productsParams/page';
 
 const ProductsPage = () => {
     const [products, setProducts] = useState<Products[]>([]);
-
+    const [productCategory , setProductCategory] = useState("");
     const [newProductName, setNewProductName] = useState('');
     const [newProductPrice, setNewProductPrice] = useState<string>('');
     const [newProductText, setNewProductText] = useState('');
@@ -49,18 +50,23 @@ const ProductsPage = () => {
             {/* Products table */}
             <div className="mx-4 mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
                 {/* Table header */}
-                <div className="grid grid-cols-[1fr_180px_180px] gap-4 border-b border-gray-200 bg-gray-50 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                <div className="grid grid-cols-[1fr_180px_180px_180px] gap-4 border-b border-gray-200 bg-gray-50 px-6 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    <span className='text-xl text-red-300 font-bold'>Category</span>
                     <span>Description</span>
                     <span>Price</span>
                     <span>Product</span>
+                    
                 </div>
 
                 <ul>
                     {products.map((product) => (
                         <li
                             key={product.id}
-                            className="grid grid-cols-[1fr_180px_180px] items-center gap-4 border-b border-gray-100 px-6 py-4 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
+                            className="grid grid-cols-[1fr_180px_180px_180px] items-center gap-4 border-b border-gray-100 px-6 py-4 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
                         >
+                            <span className=" text-xl font-medium text-green-500">
+                                {product.category}
+                            </span>
                             <span className="text-gray-600">
                                 {product.text}
                             </span>
@@ -72,12 +78,14 @@ const ProductsPage = () => {
                             <span className="font-medium text-gray-700">
                                 {product.productName}
                             </span>
+                            
                         </li>
                     ))}
                 </ul>
             </div>
 
             <ProductIdsPage />
+            <ProductSearchPage />
 
             {/* Create product header */}
             <div className="mx-4 mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -101,11 +109,13 @@ const ProductsPage = () => {
                         newProductName,
                         newProductPrice,
                         newProductText,
+                        productCategory,
                     )
                         .then(() => {
                             setNewProductName('');
                             setNewProductPrice('');
                             setNewProductText('');
+                            setProductCategory("")
                             rebuild();
                         })
                         .catch((error) => {
@@ -163,6 +173,15 @@ const ProductsPage = () => {
                             }
                             placeholder="Enter description"
                             className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        />
+                        <input
+                            type="text"
+                            value={productCategory}
+                            onChange={(e) =>
+                                setProductCategory(e.target.value)
+                            }
+                            placeholder="Enter category"
+                            className="w-full rounded-lg mt-4 border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                         />
                     </div>
                 </div>

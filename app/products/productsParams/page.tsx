@@ -1,22 +1,24 @@
+
+
 'use client';
 
 import { Products } from '@/types/products';
 import { useState } from 'react';
 
-function ProductIdsPage() {
-    const [productsId, setProductsId] = useState<Products[]>([]);
-    const [id, setId] = useState('');
+function ProductSearchPage() {
+    const [productsParams, setProductsParams] = useState<Products[]>([]);
+    const [params, setParams] = useState('');
 
-    async function findId(id: string) {
-        const response = await fetch(`/api/products/${id}`);
+    async function findParams(params:string) {
+        const response =  await fetch(`/api/products?category=${params}`)
          if (!response.ok) {
         alert("Product with this ID was not found");
         return;
     }
         const data = await response.json();
         
-        setId("")
-        setProductsId([data]);
+        setParams("")
+        setProductsParams(data);
     }
 
     return (
@@ -29,11 +31,11 @@ function ProductIdsPage() {
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-500">
-                        Search for a product by its ID
+                        Search for a product by its Category
                     </p>
                
-                {productsId.map((product) => (
-                    <div key={product.id}>
+                {productsParams.map((product) => (
+                    <div key={product.id} className='border-2 border-gray-400 p-3 rounded-sm mt-2'>
                         <p className="mt-1 text-sm text-gray-500">{product.productName}</p>
                         <p className="mt-1 text-sm text-gray-500">{product.price}</p>
                         <p className="mt-1 text-sm text-gray-500">{product.text}</p>
@@ -46,15 +48,15 @@ function ProductIdsPage() {
                     <form
                         onSubmit={(event) => {
                             event.preventDefault();
-                            findId(id);
+                            findParams(params);
                         }}
                         className="flex flex-col gap-3 sm:flex-row"
                     >
                         <input
-                            value={id}
-                            onChange={(e) => setId(e.target.value)}
+                            value={params}
+                            onChange={(e) => setParams(e.target.value)}
                             type="text"
-                            placeholder="Enter product ID"
+                            placeholder="Enter product Category"
                             className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                         />
 
@@ -71,4 +73,4 @@ function ProductIdsPage() {
     );
 }
 
-export default ProductIdsPage;
+export default ProductSearchPage;

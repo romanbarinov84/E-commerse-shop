@@ -7,6 +7,7 @@ type Product = {
     text: string;
     productName:string;
     price:number;
+    category:string;
 };
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
                             <span className='border-2 p-2 border-black mr-3 bg-red-300'>{cart.id}</span>
                             <span className='text-xl text-white font-bold mr-2'>{cart.productName}</span>
                             <span className='text-2xl text-red-600 font-extrabold'>{cart.price}.uah</span>
+                            <span className='text-2xl text-blue-300 font-extrabold'>{cart.category}.uah</span>
                             {cart.text}</li>
 
                     ))}

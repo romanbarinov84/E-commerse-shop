@@ -3,7 +3,7 @@
     price:string;
     text:string;
     id:string;
-    
+    category:string;
     
     
 }
