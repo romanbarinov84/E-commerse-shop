@@ -44,3 +44,24 @@ export async function POST(request: Request) {
     }
 }
 
+
+ export async function PATCH(request:Request , {params}:{params:Promise<{id:string}>}){
+
+     const {id} = await params;
+     const {text} = await request.json();
+
+     try {
+        const response = await fetch(`${process.env.MOCK_API_URL}/${id}`,{
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({text})
+        })
+        if(response.status === 404) throw new Error("An error occurred while trying update the text");
+        if(!response.ok) throw new Error("Failed to update text")
+            const data = await response.json();
+        return Response.json(data);
+
+     } catch {
+        return Response.json({message:"Server error"},{status:500})
+     }
+ }

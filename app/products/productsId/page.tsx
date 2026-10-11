@@ -2,6 +2,7 @@
 
 import { Products } from '@/types/products';
 import { useState } from 'react';
+import ProductUpdateTextPage from '../productUpdate/page';
 
 function ProductIdsPage() {
     const [productsId, setProductsId] = useState<Products[]>([]);
@@ -38,6 +39,7 @@ function ProductIdsPage() {
                         <p className="mt-1 text-sm text-gray-500">{product.price}</p>
                         <p className="mt-1 text-sm text-gray-500">{product.text}</p>
                         <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                        <ProductUpdateTextPage/>
                     </div>
                 ))}
  </div>

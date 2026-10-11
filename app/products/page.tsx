@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import ProductIdsPage from './productsId/page';
 import ProductSearchPage from './productsParams/page';
 
+
 const ProductsPage = () => {
     const [products, setProducts] = useState<Products[]>([]);
     const [productCategory , setProductCategory] = useState("");
@@ -62,8 +63,12 @@ const ProductsPage = () => {
                     {products.map((product) => (
                         <li
                             key={product.id}
-                            className="grid grid-cols-[1fr_180px_180px_180px] items-center gap-4 border-b border-gray-100 px-6 py-4 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
+                            className="grid grid-cols-[1fr_600px_180px_180px_180px] items-center gap-4 border-b border-gray-100 px-6 py-4 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
                         >
+                            
+                            <span className="text-sm font-bold text-red-500">
+                                {product.id}
+                            </span>
                             <span className=" text-xl font-medium text-green-500">
                                 {product.category}
                             </span>
@@ -72,12 +77,14 @@ const ProductsPage = () => {
                             </span>
 
                             <span className="font-semibold text-gray-800">
-                                {product.price}
+                                {product.price} uah
                             </span>
 
                             <span className="font-medium text-gray-700">
                                 {product.productName}
                             </span>
+
+                            
                             
                         </li>
                     ))}
