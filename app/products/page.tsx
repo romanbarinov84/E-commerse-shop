@@ -92,10 +92,13 @@ const ProductsPage = () => {
                     ))}
                 </ul>
             </div>
-
+            <div className="flex flex-col gap-4 lg:flex-row">
             <ProductIdsPage />
             <ProductSearchPage/>
-            <UpdateProductPage/>
+            
+            </div>
+
+           <UpdateProductPage/>
 
             {/* Create product header */}
             <div className="mx-4 mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">

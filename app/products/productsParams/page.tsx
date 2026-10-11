@@ -22,7 +22,7 @@ function ProductSearchPage() {
     }
 
     return (
-        <div className="mx-4 mt-8">
+        <div className=" mx-20 mt-10 w-full max-w-xl px-4">
             {/* Header */}
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
                 <div className="px-6 py-5">
