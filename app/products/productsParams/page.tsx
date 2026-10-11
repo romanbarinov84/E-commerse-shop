@@ -27,7 +27,7 @@ function ProductSearchPage() {
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
                 <div className="px-6 py-5">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-800">
-                        Find product :
+                        Find product by Category :
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-500">

@@ -2,7 +2,7 @@
 
 import { Products } from '@/types/products';
 import { useState } from 'react';
-import ProductUpdateTextPage from '../productUpdate/page';
+
 
 function ProductIdsPage() {
     const [productsId, setProductsId] = useState<Products[]>([]);
@@ -26,7 +26,7 @@ function ProductIdsPage() {
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
                 <div className="px-6 py-5">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-800">
-                        Find product :
+                        Find product by ID :
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-500">
@@ -39,7 +39,7 @@ function ProductIdsPage() {
                         <p className="mt-1 text-sm text-gray-500">{product.price}</p>
                         <p className="mt-1 text-sm text-gray-500">{product.text}</p>
                         <p className="mt-1 text-sm text-gray-500">{product.category}</p>
-                        <ProductUpdateTextPage/>
+                        
                     </div>
                 ))}
  </div>

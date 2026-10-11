@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 
 import ProductIdsPage from './productsId/page';
 import ProductSearchPage from './productsParams/page';
+import UpdateProductPage from './productUpdate/page';
+
 
 
 const ProductsPage = () => {
@@ -92,7 +94,8 @@ const ProductsPage = () => {
             </div>
 
             <ProductIdsPage />
-            <ProductSearchPage />
+            <ProductSearchPage/>
+            <UpdateProductPage/>
 
             {/* Create product header */}
             <div className="mx-4 mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
